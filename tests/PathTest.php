@@ -57,6 +57,12 @@ class PathTest extends TestCase
         $this->assertEquals('/a/b/x', $this->path->currentPath);
     }
 
+    public function testSelectParent() {
+        $this->path->cd('/a/..');
+        $this->assertEquals('/', $this->path->currentPath);
+    }
+
+
     public function testIsNotInvalidPath()
     {
         $this->expectException(\InvalidArgumentException::class);

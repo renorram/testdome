@@ -24,21 +24,23 @@ class Path
                     unset($path[$k], $path[$k - 1]);
                 }
             }
-        } else {
-            $currentPath = explode("/", $this->currentPath);
-            $path = explode("/", $newPath);
 
-            foreach ($path as $k => $item) {
-                if ($item === '..') {
-                    array_pop($currentPath);
-                } else {
-                    $currentPath[] = $item;
-                }
-            }
-            $path = $currentPath;
+            $path = array_filter($path);
+            $this->currentPath = "/" . \join("/", $path);
+            return;
         }
 
-        $this->currentPath = \join("/", $path);
+        $currentPath = explode("/", $this->currentPath);
+        $path = explode("/", $newPath);
+
+        foreach ($path as $k => $item) {
+            if ($item === '..') {
+                array_pop($currentPath);
+            } else {
+                $currentPath[] = $item;
+            }
+        }
+        $this->currentPath = \join("/", $currentPath);
     }
 
     public function validatePath(string $path): bool
