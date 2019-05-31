@@ -34,13 +34,15 @@ class Path
         $path = explode("/", $newPath);
 
         foreach ($path as $k => $item) {
-            if ($item === '..') {
+            if ($item === '..' && !empty($currentPath)) {
                 array_pop($currentPath);
             } else {
                 $currentPath[] = $item;
             }
         }
-        $this->currentPath = \join("/", $currentPath);
+        $currentPath = \join("/", $currentPath);
+
+        $this->currentPath = strlen($currentPath) === 0 ? "/" : $currentPath;
     }
 
     public function validatePath(string $path): bool
