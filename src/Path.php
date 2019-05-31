@@ -17,21 +17,22 @@ class Path
             throw new \InvalidArgumentException(\sprintf('%s path invalid!', $newPath));
         }
 
-        if ($newPath[0] == '/') {
-            $path = explode("/", $newPath);
+        if ($newPath[0] === '/') {
+            $path = explode('/', $newPath);
             foreach ($path as $k => $item) {
-                if ($item == "..") {
+                if ($item === '..') {
                     unset($path[$k], $path[$k - 1]);
                 }
             }
 
             $path = array_filter($path);
-            $this->currentPath = "/" . \join("/", $path);
+            $this->currentPath = '/'.\join('/', $path);
+
             return;
         }
 
-        $currentPath = explode("/", $this->currentPath);
-        $path = explode("/", $newPath);
+        $currentPath = explode('/', $this->currentPath);
+        $path = explode('/', $newPath);
 
         foreach ($path as $k => $item) {
             if ($item === '..' && !empty($currentPath)) {
@@ -40,9 +41,9 @@ class Path
                 $currentPath[] = $item;
             }
         }
-        $currentPath = \join("/", $currentPath);
+        $currentPath = \join('/', $currentPath);
 
-        $this->currentPath = strlen($currentPath) === 0 ? "/" : $currentPath;
+        $this->currentPath = strlen($currentPath) === 0 ? '/' : $currentPath;
     }
 
     public function validatePath(string $path): bool
