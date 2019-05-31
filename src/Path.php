@@ -34,7 +34,7 @@ class Path
         $currentPath = explode('/', $this->currentPath);
         $path = explode('/', $newPath);
 
-        foreach ($path as $k => $item) {
+        foreach ($path as $item) {
             if ($item === '..' && !empty($currentPath)) {
                 array_pop($currentPath);
             } else {
